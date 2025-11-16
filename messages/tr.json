@@ -1,0 +1,9 @@
+{
+  "Header": {
+    "welcome": "Caucasync Hoş geldiniz",
+   "callUs": "Call us:",
+    "workHours":"Work Hours",
+    "mailTo":"Mail To",
+    "address":"Address"
+  }
+}

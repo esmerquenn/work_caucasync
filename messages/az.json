@@ -1,0 +1,44 @@
+{
+  "Header": {
+    "welcome": "Caucasync-a xoş gəlmisiniz",
+    "callUs": "Call us:",
+    "workHours": "Work Hours",
+    "mailTo": "Mail To",
+    "address": "Address"
+  },
+
+  "about": {
+    "tabs": {
+      "vision": {
+        "label": "Bizim baxışımız",
+        "title": "Gələcəyə Baxışımız",
+        "description": "Caucasync olaraq, qlobal ticarətdə lider olmaq və müştərilərimizə innovativ həllər təqdim etmək vizyonumuzla hərəkət edirik. Biz dünya bazarlarında körpü olmaq istəyirik."
+      },
+      "mission": {
+        "label": "Missiyamız",
+        "title": "Missiyamız və Dəyərlərimiz",
+        "description": "Müştərilərimizə ən yüksək keyfiyyətli xidmət göstərmək, etibarlı tərəfdaş olmaq və dayanıqlı biznes həlləri ilə regionda fərq yaratmaqdır. Şəffaflıq, peşəkarlıq və innovasiya bizim əsas prinsiplərimizdir."
+      },
+      "about": {
+        "label": "Haqqımızda",
+        "title": "Caucasync Haqqında",
+        "description": "2015-ci ildən bəri fəaliyyət göstərən Caucasync, beynəlxalq ticarət sahəsində ekspert şirkətdir. 50+ ölkə ilə əməkdaşlıq edərək, müştərilərimizə kompleks logistika və ticarət həlləri təqdim edirik. Komandamız 100+ peşəkardan ibarətdir."
+      }
+    },
+    "learnMore": "Daha Çox",
+    "stats": {
+      "countries": {
+        "number": "50+",
+        "label": "Ölkə"
+      },
+      "professionals": {
+        "number": "100+",
+        "label": "Peşəkar"
+      },
+      "year": {
+        "number": "2015",
+        "label": "İl"
+      }
+    }
+  }
+}
