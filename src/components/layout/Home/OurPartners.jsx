@@ -1,53 +1,38 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
+import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import HeaderOf from "./HeaderOf";
-
-const brands = [
-  {
-    id: 1,
-    name: "Microsoft",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg",
-  },
-  {
-    id: 2,
-    name: "Google",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
-  },
-  {
-    id: 3,
-    name: "Amazon",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
-  },
-  {
-    id: 4,
-    name: "Apple",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg",
-  },
-  {
-    id: 5,
-    name: "Samsung",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg",
-  },
-  {
-    id: 6,
-    name: "IBM",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg",
-  },
-  {
-    id: 7,
-    name: "Intel",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/7/7d/Intel_logo_%282006-2020%29.svg",
-  },
-  {
-    id: 8,
-    name: "Oracle",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg",
-  },
-];
+import { useGetPartnerSectionsQuery } from "@/store/partnersApi";
+import { useGetPageHeadersSectionsQuery } from "@/store/pageHeadersApi";
 
 function OurPartners() {
-  const duplicatedBrands = [...brands, ...brands, ...brands];
+  const params = useParams();
+  const locale = (params?.locale) || "az";
+  const t = useTranslations("Common");
+  const tPages = useTranslations("Pages.partners");
+  const { data: partnersData, isLoading } = useGetPartnerSectionsQuery();
+  const { data: page } = useGetPageHeadersSectionsQuery();
+  
+  const pageHeader = page?.data?.find((item) => item.page === "partners") || null;
+
+  // Map API data to brands format
+  const brands = useMemo(() => {
+    if (!partnersData?.success || !partnersData?.data) {
+      return [];
+    }
+    return partnersData.data.map((partner) => ({
+      id: partner.id,
+      name: partner.name,
+      logo: partner.image ? `http://127.0.0.1:8000/storage/${partner.image}` : "",
+    }));
+  }, [partnersData]);
+
+  const duplicatedBrands = useMemo(() => {
+    if (brands.length === 0) return [];
+    return [...brands, ...brands, ...brands];
+  }, [brands]);
 
   return (
     <section className="relative py-14 lg:py-20 overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white">
@@ -66,9 +51,9 @@ function OurPartners() {
             viewport={{ once: true }}
           >
             <HeaderOf
-              title="Our Partners"
-              text="We've prepared a few case studies from a selection of our clients to provide you <br/> with insight into the value ITA are capable of unlocking."
-              little_title="Partners"
+              title={pageHeader?.title?.[locale] ? pageHeader.title[locale].replace(/\n/g, "<br />") : t("headerNotFound")}
+              text={pageHeader?.description?.[locale] ? pageHeader.description[locale].replace(/\n/g, "<br />") : t("headerNotFound")}
+              little_title={pageHeader?.little_title?.[locale] || tPages("title")}
             />
           </motion.div>
 
@@ -80,11 +65,11 @@ function OurPartners() {
             viewport={{ once: true }}
             className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 mb-20"
           >
-            {[
-              { number: "50+", label: "Global Partners" },
-              { number: "15+", label: "Years Experience" },
-              { number: "98%", label: "Client Satisfaction" },
-            ].map((stat, index) => (
+              {[
+                { number: "50+", label: tPages("globalPartners") },
+                { number: "15+", label: tPages("yearsExperience") },
+                { number: "98%", label: tPages("clientSatisfaction") },
+              ].map((stat, index) => (
               <motion.div
                 key={index}
                 whileHover={{ y: -5, scale: 1.02 }}
@@ -105,38 +90,44 @@ function OurPartners() {
           <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-50 via-gray-50/80 to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-50 via-gray-50/80 to-transparent z-10 pointer-events-none" />
 
-          <motion.div
-            className="flex py-8"
-            animate={{
-              x: [0, -100 * brands.length],
-            }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 40,
-                ease: "linear",
-              },
-            }}
-          >
-            {duplicatedBrands.map((brand, index) => (
-              <motion.div
-                key={`${brand.id}-${index}`}
-                className="flex-shrink-0 w-56 h-40 mx-6 relative group"
-                whileHover={{ scale: 1.05 }}
-              >
-                <div className="w-full h-full bg-white rounded-2xl shadow-md border border-gray-100 flex items-center justify-center p-8 transition-all duration-300 group-hover:shadow-xl group-hover:border-emerald-200">
-                  <motion.img
-                    src={brand.logo}
-                    alt={brand.name}
-                    className="max-w-full max-h-24 object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100"
-                  />
-                </div>
-                {/* Hover glow effect */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-400 to-blue-400 opacity-0 group-hover:opacity-10 transition-opacity duration-300 -z-10 blur-xl" />
-              </motion.div>
-            ))}
-          </motion.div>
+          {duplicatedBrands.length > 0 ? (
+            <motion.div
+              className="flex py-8"
+              animate={{
+                x: [0, -100 * brands.length],
+              }}
+              transition={{
+                x: {
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  duration: 40,
+                  ease: "linear",
+                },
+              }}
+            >
+              {duplicatedBrands.map((brand, index) => (
+                <motion.div
+                  key={`${brand.id}-${index}`}
+                  className="flex-shrink-0 w-56 h-40 mx-6 relative group"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <div className="w-full h-full bg-white rounded-2xl shadow-md border border-gray-100 flex items-center justify-center p-8 transition-all duration-300 group-hover:shadow-xl group-hover:border-emerald-200">
+                    <motion.img
+                      src={brand.logo}
+                      alt={brand.name}
+                      className="max-w-full max-h-24 object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100"
+                    />
+                  </div>
+                  {/* Hover glow effect */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-400 to-blue-400 opacity-0 group-hover:opacity-10 transition-opacity duration-300 -z-10 blur-xl" />
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            <div className="text-center py-10">
+              <p>{t("noPartnersAvailable")}</p>
+            </div>
+          )}
         </div>
 
         {/* Bottom CTA */}
@@ -147,13 +138,13 @@ function OurPartners() {
           viewport={{ once: true }}
           className="text-center mt-20"
         >
-          <p className="text-gray-600 mb-6">Trusted by leading companies worldwide</p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-shadow duration-300"
-          >
-            <span>Become a Partner</span>
+            <p className="text-gray-600 mb-6">{tPages("trustedBy")}</p>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-shadow duration-300"
+            >
+              <span>{tPages("becomePartner")}</span>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>

@@ -5,11 +5,13 @@ import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle, 
 import { AlignJustify, XIcon } from "lucide-react";
 import Link from "next/link";
 import { Separator } from "../separator";
-import CurvyTextBox from "../CurvyTextBox";
-import { MenuBrandAccardion } from "../accardions/MenuBrandAccardion";
 import Logo from "../../../assets/img/photo/logo12.png";
 import Image from "next/image";
+import { useGetsettingsQuery } from "@/store/settingsApi";
 export function MenuSideBar() {
+  const { data, isLoading } = useGetsettingsQuery();
+
+  const site_logo = data?.logo || Logo;
   return (
     <div className="relative">
       <Sheet key={"left"}>
@@ -23,7 +25,7 @@ export function MenuSideBar() {
             <div className="flex items-center justify-between">
               <SheetTitle className={"text-[22px] text-[#fff] fold-bold"}>
                 <Link href={"/"} className=" flex items-center w-[60px] h-[60px]  bg-white rounded-full  p-1">
-                  <Image src={Logo} width={100} alt="phone" />
+                  <Image src={site_logo} height={100} className="rounded-full" width={100} alt="phone" />
                 </Link>
               </SheetTitle>
               <SheetClose className="ring-offset-background focus:ring-ring data-[state=open]:bg-secondary rounded-xs  transition-opacity hover:opacity-100  focus:outline-hidden disabled:pointer-events-none ">

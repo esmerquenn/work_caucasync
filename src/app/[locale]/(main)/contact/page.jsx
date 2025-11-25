@@ -1,9 +1,25 @@
 "use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send, CheckCircle, Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import { useParams } from "next/navigation";
+import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
 import HeaderPages from "@/components/ui/headerPages/HeaderPages";
+import { useGetContactSectionsQuery } from "@/store/contactApi";
+import { useGetPageHeadersSectionsQuery } from "@/store/pageHeadersApi";
+import SocialIcons from "@/components/ui/social-icons/SocialIcons";
+import PageLoader from "@/components/ui/loading/PageLoader";
+import { useTranslations } from "next-intl";
+
 function ContactPage() {
+  const params = useParams();
+  const locale = (params?.locale) || "az";
+  const t = useTranslations("Common");
+  const tPages = useTranslations("Pages.contact");
+  const { data: contactData, isLoading: contactLoading } = useGetContactSectionsQuery();
+  const { data: page, isLoading: pageLoading } = useGetPageHeadersSectionsQuery();
+  
+  const contactHeader = page?.data?.find((item) => item.page === "contact") || {};
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -15,6 +31,7 @@ function ContactPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Form Data:", formData);
     setIsSubmitted(true);
     setTimeout(() => {
       setIsSubmitted(false);
@@ -34,40 +51,39 @@ function ContactPage() {
       [e.target.name]: e.target.value,
     });
   };
+
   const contactInfo = [
     {
       icon: Mail,
-      title: "Email",
-      value: "info@caucasync.com",
-      href: "mailto:info@caucasync.com",
+      title: tPages("email"),
+      value: contactData?.email || "info@caucasync.com",
+      href: contactData?.email ? `mailto:${contactData.email}` : "mailto:info@caucasync.com",
     },
     {
       icon: Phone,
-      title: "Phone",
-      value: "+994 (555) 123-45-67",
-      href: "tel:+15551234567",
+      title: tPages("phone"),
+      value: contactData?.phone || "+994 50 334 45 49",
+      href: contactData?.phone ? `tel:${contactData.phone}` : "tel:+994503344549",
     },
     {
       icon: MapPin,
-      title: "Address",
-      value: "123 Business Street, Suite 100, New York, NY 10001",
+      title: tPages("address"),
+      value: contactData?.address || "Baku, Azerbaijan",
       href: "#",
     },
   ];
 
-  const socialLinks = [
-    { icon: Facebook, href: "#", label: "Facebook", color: "hover:text-green-600" },
-    { icon: Twitter, href: "#", label: "Twitter", color: "hover:text-green-400" },
-    { icon: Linkedin, href: "#", label: "LinkedIn", color: "hover:text-green-700" },
-    { icon: Instagram, href: "#", label: "Instagram", color: "hover:text-pink-600" },
-  ];
+  if (contactLoading || pageLoading) {
+    return <PageLoader />;
+  }
+
 
   return (
     <div className="min-h-screen bg-main py-10">
       <HeaderPages
         image="bg-image-contact"
-        title="Get in Touch"
-        text="Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible"
+        title={contactHeader.title?.[locale] || tPages("title")}
+        text={contactHeader.description?.[locale] || tPages("description")}
       />
 
       {/* Main Content */}
@@ -226,28 +242,15 @@ function ContactPage() {
 
               {/* Social Media & FAQ */}
               <div className="bg-white rounded-sm shadow-xl p-8 border border-gray-100">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Follow Us</h3>
-                <div className="flex gap-4 mb-8">
-                  {socialLinks.map((social, index) => {
-                    const Icon = social.icon;
-                    return (
-                      <motion.a
-                        key={index}
-                        href={social.href}
-                        whileHover={{ scale: 1.1, y: -3 }}
-                        className={`w-12 h-12 bg-gray-100 rounded-sm flex items-center justify-center text-gray-600 ${social.color} transition-colors duration-300`}
-                        aria-label={social.label}
-                      >
-                        <Icon className="w-5 h-5" />
-                      </motion.a>
-                    );
-                  })}
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">{tPages("followUs")}</h3>
+                <div className="mb-8">
+                  <SocialIcons />
                 </div>
 
                 <div className="border-t border-gray-200 pt-6">
-                  <h4 className="text-lg font-bold text-gray-900 mb-4">Quick Response</h4>
+                  <h4 className="text-lg font-bold text-gray-900 mb-4">{tPages("quickResponse")}</h4>
                   <p className="text-gray-600 text-sm mb-4">
-                    We typically respond within 24 hours during business days. For urgent matters, please call us directly.
+                    {tPages("quickResponseDesc")}
                   </p>
                   {/* <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
                     <p className="text-emerald-800 text-sm font-medium">

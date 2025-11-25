@@ -1,9 +1,66 @@
 {
   "Header": {
     "welcome": "Caucasync Hoş geldiniz",
-   "callUs": "Call us:",
-    "workHours":"Work Hours",
-    "mailTo":"Mail To",
-    "address":"Address"
+    "callUs": "Bizi arayın:",
+    "workHours": "Çalışma Saatleri",
+    "mailTo": "E-posta",
+    "address": "Adres"
+  },
+
+  "Common": {
+    "loading": "Yükleniyor...",
+    "pleaseWait": "Lütfen bekleyin",
+    "readMore": "Devamını oku",
+    "headerNotFound": "Başlık bulunamadı",
+    "noDataAvailable": "Veri bulunamadı",
+    "loadingServices": "Hizmetler yükleniyor...",
+    "loadingPartners": "Ortaklar yükleniyor...",
+    "loadingSlides": "Slaytlar yükleniyor...",
+    "noServicesAvailable": "Hizmet mevcut değil",
+    "noPartnersAvailable": "Ortak mevcut değil",
+    "noSlidesAvailable": "Slayt mevcut değil",
+    "loadingError": "Yükleme hatası",
+    "errorLoadingData": "Veri yüklenirken hata oluştu"
+  },
+
+  "Pages": {
+    "about": {
+      "title": "Hakkımızda",
+      "description": "İşimizde hiçbir sınır tanımıyoruz"
+    },
+    "services": {
+      "title": "Hizmetler",
+      "description": "Hizmet Alanlarımız"
+    },
+    "whatwedo": {
+      "title": "Ne yapıyoruz",
+      "description": "Müşterilerimizin seçiminden birkaç vaka çalışması hazırladık ki, ITA'nın açabileceği değer hakkında fikir verebilelim."
+    },
+    "howwework": {
+      "title": "Nasıl çalışıyoruz",
+      "description": "Caucasync olarak uluslararası ticarette profesyonel çözümler sunuyor ve müşterilerimizin başarısına katkıda bulunuyoruz",
+      "principle": "Çalışma Prensibimiz",
+      "subtitle": "5 adımda profesyonel ve şeffaf iş süreci",
+      "services": "Hizmetlerimiz"
+    },
+    "contact": {
+      "title": "İletişime Geçin",
+      "description": "Sorularınız mı var? Sizden haber almak isteriz. Bize bir mesaj gönderin, en kısa sürede yanıtlayacağız",
+      "email": "E-posta",
+      "phone": "Telefon",
+      "address": "Adres",
+      "followUs": "Bizi Takip Edin",
+      "quickResponse": "Hızlı Yanıt",
+      "quickResponseDesc": "Genellikle iş günlerinde 24 saat içinde yanıt veriyoruz. Acil konular için lütfen doğrudan bizi arayın."
+    },
+    "partners": {
+      "title": "Ortaklarımız",
+      "description": "Müşterilerimizin seçiminden birkaç vaka çalışması hazırladık ki, ITA'nın açabileceği değer hakkında fikir verebilelim.",
+      "trustedBy": "Dünyanın önde gelen şirketleri tarafından güveniliyor",
+      "becomePartner": "Ortak Olun",
+      "globalPartners": "Küresel Ortaklar",
+      "yearsExperience": "Yıllık Deneyim",
+      "clientSatisfaction": "Müşteri Memnuniyeti"
+    }
   }
 }

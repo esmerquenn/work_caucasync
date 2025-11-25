@@ -1,10 +1,67 @@
 {
   "Header": {
     "welcome": "Caucasync-a xoş gəlmisiniz",
-    "callUs": "Call us:",
-    "workHours": "Work Hours",
-    "mailTo": "Mail To",
-    "address": "Address"
+    "callUs": "Zəng edin:",
+    "workHours": "İş saatları",
+    "mailTo": "E-poçt",
+    "address": "Ünvan"
+  },
+
+  "Common": {
+    "loading": "Yüklənir...",
+    "pleaseWait": "Zəhmət olmasa gözləyin",
+    "readMore": "Daha çox",
+    "headerNotFound": "Başlıq tapılmadı",
+    "noDataAvailable": "Məlumat tapılmadı",
+    "loadingServices": "Xidmətlər yüklənir...",
+    "loadingPartners": "Tərəfdaşlar yüklənir...",
+    "loadingSlides": "Slaydlar yüklənir...",
+    "noServicesAvailable": "Xidmətlər mövcud deyil",
+    "noPartnersAvailable": "Tərəfdaşlar mövcud deyil",
+    "noSlidesAvailable": "Slaydlar mövcud deyil",
+    "loadingError": "Yükləmə xətası",
+    "errorLoadingData": "Məlumat yüklənərkən xəta baş verdi"
+  },
+
+  "Pages": {
+    "about": {
+      "title": "Haqqımızda",
+      "description": "Biz işimizdə heç bir sərhəd tanımırıq"
+    },
+    "services": {
+      "title": "Xidmətlər",
+      "description": "Xidmət sahələrimiz"
+    },
+    "whatwedo": {
+      "title": "Nə edirik",
+      "description": "Müştərilərimizin seçimindən bir neçə case study hazırladıq ki, ITA-nın açmağa qadir olduğu dəyər haqqında fikir verək."
+    },
+    "howwework": {
+      "title": "Necə işləyirik",
+      "description": "Caucasync olaraq beynəlxalq ticarətdə peşəkar həllər təqdim edir, müştərilərimizin uğuruna töhfə veririk",
+      "principle": "İş Prinsipimiz",
+      "subtitle": "5 addımda peşəkar və şəffaf iş prosesi",
+      "services": "Xidmətlərimiz"
+    },
+    "contact": {
+      "title": "Əlaqə saxlayın",
+      "description": "Sualınız var? Sizdən eşitməkdən məmnun olarıq. Bizə mesaj göndərin və mümkün qədər tez cavab verəcəyik",
+      "email": "E-poçt",
+      "phone": "Telefon",
+      "address": "Ünvan",
+      "followUs": "Bizi izləyin",
+      "quickResponse": "Tez Cavab",
+      "quickResponseDesc": "Biz adətən iş günlərində 24 saat ərzində cavab veririk. Təcili məsələlər üçün zəhmət olmasa birbaşa zəng edin."
+    },
+    "partners": {
+      "title": "Tərəfdaşlarımız",
+      "description": "Müştərilərimizin seçimindən bir neçə case study hazırladıq ki, ITA-nın açmağa qadir olduğu dəyər haqqında fikir verək.",
+      "trustedBy": "Dünyanın aparıcı şirkətləri tərəfindən etibar edilir",
+      "becomePartner": "Tərəfdaş olun",
+      "globalPartners": "Qlobal Tərəfdaşlar",
+      "yearsExperience": "İllik Təcrübə",
+      "clientSatisfaction": "Müştəri Məmnuniyyəti"
+    }
   },
 
   "about": {

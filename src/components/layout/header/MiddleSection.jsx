@@ -9,38 +9,48 @@ import { LanguageSwitcher } from "@/components/ui/selects";
 import Logo from "../../../assets/img/photo/logo12.png";
 import Image from "next/image";
 import Link from "next/link";
+import { useGetsettingsQuery } from "@/store/settingsApi";
+import { useGetContactSectionsQuery } from "@/store/contactApi";
 function MiddleSection() {
   const t = useTranslations("Header");
+  const { data, isLoading } = useGetsettingsQuery();
+  const { data: contactData, isLoading: contactLoading} = useGetContactSectionsQuery();
+  const site_logo = data?.logo || Logo;
+console.log(contactData);
 
+  // const {email, phone, workhours, address}=contactData?.data;
   const items = [
     {
       label: t("callUs", { defaultValue: "Call us:" }),
-      text: "+994 50 334 45 49",
+      text: contactData?.phone || "+994 50 334 45 49",
       icon: PhoneCall,
-      href: "tel:+994503344549",
+      href: contactData?.phone ? `tel:${contactData.phone}` : "tel:+994503344549",
     },
     {
       label: t("workHours", { defaultValue: "Work hours:" }),
-      text: "9am - 6pm",
+      text: contactData?.workhours || "9am - 6pm",
       icon: AlarmClock,
     },
 
     {
       label: t("mailTo", { defaultValue: "Mail to:" }),
-      text: "info@caucasync.com",
+      text: contactData?.email || "info@caucasync.com",
       icon: Mail,
-      href: "mailto:info@caucasync.com",
+      href: contactData?.email ? `mailto:${contactData.email}` : "mailto:info@caucasync.com",
     },
     {
       label: t("address", { defaultValue: "Address:" }),
-      text: "Baku, Azerbaijan",
+      text: contactData?.address || "Baku, Azerbaijan",
       icon: MapPin,
     },
   ];
 
   return (
     <div className="bg-main">
-      <div id="middle-section" className="max-w-6xl mx-auto py-[10px] lg:py-[20px] gap-[20px]  px-4 lg:px-8 flex justify-between items-center lg:block">
+      <div
+        id="middle-section"
+        className="max-w-6xl mx-auto py-[10px] lg:py-[20px] gap-[20px]  px-4 lg:px-8 flex justify-between items-center lg:block"
+      >
         <div className=" items-center justify-between gap-[20px] lg:gap-[40px] flex-wrap lg:flex-nowrap hidden lg:flex">
           {items.map((item, index) => {
             const Icon = item.icon;
@@ -89,11 +99,8 @@ function MiddleSection() {
 
         <MenuSideBar />
         <div className="lg:hidden ml-6">
-          <Link
-            href={"/"}
-            className=" flex items-center w-[70px] h-[70px]  bg-white rounded-full   p-1"
-          >
-            <Image src={Logo} width={100} alt="caucasync " />
+          <Link href={"/"} className=" flex items-center w-[70px] h-[70px]  bg-white rounded-full   p-1">
+            <Image src={site_logo} height={100} width={100} className="rounded-full" alt="caucasync " />
           </Link>
         </div>
         <div className="flex lg:hidden items-center gap-[20px] border p-1 bg-white rounded-[6px]">

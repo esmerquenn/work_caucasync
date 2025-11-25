@@ -1,77 +1,127 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import {  Users, CheckCircle, TrendingUp, FileText, Handshake, Target, Award } from "lucide-react";
+import { useParams } from "next/navigation";
+import { Users, CheckCircle, TrendingUp, FileText, Handshake, Target, Award, Airplay, Search, Settings, Package, Truck, Globe, Building, Factory } from "lucide-react";
 
 import HeaderPages from "@/components/ui/headerPages/HeaderPages";
+import { useGetPageHeadersSectionsQuery } from "@/store/pageHeadersApi";
+import { useGetHowWeDoStepsSectionsQuery } from "@/store/howWeWorkStepsApi";
+import { useGetWhatWeDoSectionSectionsQuery } from "@/store/whatWeDoSectionsApi";
+import { useMemo } from "react";
+import { useTranslations } from "next-intl";
+import PageLoader from "@/components/ui/loading/PageLoader";
 
 function page() {
-    const whatWeDo = [
-    {
-      icon: Handshake,
-      title: "Beynəlxalq Ticarət Vasitəçiliyi",
-      description: "Caucasync olaraq, müxtəlif ölkələr arasında ticarət körpüsü yaradırıq. Tədarükçülər və alıcılar arasında etibarlı vasitəçi kimi çıxış edərək, hər iki tərəfin mənafelərini qoruyuruq. 50-dən çox ölkə ilə əməkdaşlıq edərək, müştərilərimizə ən sərfəli və keyfiyyətli məhsulları təqdim edirik.",
-      color: "from-blue-500 to-blue-600",
-    },
-    {
-      icon: FileText,
-      title: "Tender İştirakı və İdarəetməsi",
-      description: "Dövlət və özəl sektor tenderlərində peşəkar iştirak təmin edirik. Tender sənədlərinin hazırlanmasından tutmuş qazanılmasına qədər bütün prosesi idarə edirik. Texniki və kommersial təkliflərin hazırlanması, qiymətləndirmə və danışıqlar mərhələsində tam dəstək göstəririk.",
-      color: "from-emerald-500 to-emerald-600",
-    },
-    {
-      icon: TrendingUp,
-      title: "Logistika və Tədarük Zənciri",
-      description: "Məhsulların mənbədən son nöqtəyə çatdırılması üçün kompleks logistika həlləri təklif edirik. Gömrük rəsmiləşdirilməsi, nəqliyyat, anbar idarəetməsi və çatdırılma xidmətlərimizlə tədarük zəncirinizi optimize edirik. Vaxtında və təhlükəsiz çatdırılma zəmanəti veririk.",
-      color: "from-purple-500 to-purple-600",
-    },
-    {
-      icon: Users,
-      title: "Müştəri Məmnuniyyəti və Dəstək",
-      description: "98% müştəri məmnuniyyəti göstəricisi ilə fəxr edirik. Hər müştəriyə fərdi yanaşma tətbiq edərək, onların xüsusi tələblərini qarşılayırıq. 7/24 müştəri dəstəyi və satış sonrası xidmətlərimizlə daim yanınızdayıq. Uzunmüddətli əməkdaşlıq qurmaq bizim əsas prioritetimizdir.",
-      color: "from-orange-500 to-orange-600",
-    },
+  const params = useParams();
+  const locale = params?.locale || "az";
+  const t = useTranslations("Common");
+  const tWhatWeDo = useTranslations("Pages.whatwedo");
+  const tHowWeWork = useTranslations("Pages.howwework");
+  const { data: page, isLoading: pageLoading } = useGetPageHeadersSectionsQuery();
+  const { data: stepsData, isLoading: stepsLoading } = useGetHowWeDoStepsSectionsQuery();
+  const { data: whatWeDoData, isLoading: whatWeDoLoading } = useGetWhatWeDoSectionSectionsQuery();
+
+  const pageHeader = page?.data?.find((item) => item.page === "whatwedo") || {};
+  const page_what_we_do = page?.data?.find((item) => item.page === "how_we_work") || {};
+
+  // Icon mapping for dynamic icon usage
+  const iconMap = {
+    Target,
+    Handshake,
+    FileText,
+    CheckCircle,
+    Award,
+    Users,
+    TrendingUp,
+    Airplay,
+    Search,
+    Settings,
+    Package,
+    Truck,
+    Globe,
+    Building,
+    Factory,
+  };
+
+  // Color gradients array for cycling through
+  const colorGradients = [
+    "from-blue-500 to-blue-600",
+    "from-emerald-500 to-emerald-600",
+    "from-purple-500 to-purple-600",
+    "from-orange-500 to-orange-600",
+    "from-pink-500 to-pink-600",
+    "from-indigo-500 to-indigo-600",
+    "from-cyan-500 to-cyan-600",
+    "from-rose-500 to-rose-600",
   ];
 
-  const howWeWork = [
-    {
-      step: "01",
-      title: "Təhlil və Planlaşdırma",
-      description: "Müştərinin ehtiyaclarını dəqiq müəyyənləşdirir, bazar araşdırması aparır və optimal həll strategiyası hazırlayırıq.",
-      icon: Target,
-    },
-    {
-      step: "02",
-      title: "Tərəfdaş Seçimi",
-      description: "Geniş tərəfdaş şəbəkəmizdən ən uyğun tədarükçü və ya alıcıları seçir, keyfiyyət və qiymət baxımından ən yaxşı variantı təqdim edirik.",
-      icon: Handshake,
-    },
-    {
-      step: "03",
-      title: "Danışıq və Müqavilə",
-      description: "Peşəkar danışıqçılarımız hər iki tərəfin razılığını təmin edərək, şəffaf və ədalətli müqavilələr bağlayırıq.",
-      icon: FileText,
-    },
-    {
-      step: "04",
-      title: "İcra və Nəzarət",
-      description: "Prosesi başdan sona nəzarətdə saxlayır, keyfiyyət standartlarına riayət olunmasını təmin edir və müştərini məlumatlandırırıq.",
-      icon: CheckCircle,
-    },
-    {
-      step: "05",
-      title: "Çatdırılma və Qiymətləndirmə",
-      description: "Məhsulların vaxtında və təhlükəsiz çatdırılmasını təmin edir, prosesi qiymətləndirir və gələcək əməkdaşlıq üçün əlaqəni davam etdiririk.",
-      icon: Award,
-    },
-  ];
+  // Transform API data to whatWeDo format
+  const whatWeDo = useMemo(() => {
+    if (!whatWeDoData?.success || !whatWeDoData?.data) {
+      return [];
+    }
+    return whatWeDoData.data
+      .filter((item) => item.status === true)
+      .sort((a, b) => a.order - b.order)
+      .map((item, index) => {
+        // Normalize icon name: trim, remove spaces, capitalize first letter
+        const iconName = item.icon?.trim().replace(/\s+/g, "") || "Target";
+        // Try to find icon in map, fallback to Target
+        const IconComponent = iconMap[iconName] || Target;
+        // Cycle through color gradients
+        const color = colorGradients[index % colorGradients.length];
+        
+        return {
+          icon: IconComponent,
+          title: item.title?.[locale] || "",
+          description: item.description?.[locale] || "",
+          color: color,
+          image: item.image ? `http://127.0.0.1:8000/storage/${item.image}` : null,
+        };
+      });
+  }, [whatWeDoData, locale]);
+
+  // Transform backend data to howWeWork format
+  const howWeWork = useMemo(() => {
+    return stepsData?.data
+      ?.filter((item) => item.status === true)
+      .sort((a, b) => a.order - b.order)
+      .map((item, index) => {
+        const stepNumber = String(item.order || index + 1).padStart(2, "0");
+        // Normalize icon name: trim, remove spaces, capitalize first letter
+        const iconName = item.icon?.trim().replace(/\s+/g, "") || "Target";
+        // Try to find icon in map, fallback to Target
+        const IconComponent = iconMap[iconName] || Target;
+        
+        return {
+          step: stepNumber,
+          title: item.step_title?.[locale] || "",
+          description: item.step_description?.[locale] || "",
+          icon: IconComponent,
+          image: item.image,
+        };
+      }) || [
+      {
+        step: "01",
+        title: "Təhlil və Planlaşdırma",
+        description:
+          "Müştərinin ehtiyaclarını dəqiq müəyyənləşdirir, bazar araşdırması aparır və optimal həll strategiyası hazırlayırıq.",
+        icon: Target,
+      },
+    ];
+  }, [stepsData, locale]);
+
+  if (pageLoading || stepsLoading || whatWeDoLoading) {
+    return <PageLoader />;
+  }
   return (
     <div className="py-10 bg-main">
-      {/* <HeaderPages
+      <HeaderPages
         image="bg-image-about"
-        title="What we do"
-        text="We’ve prepared a few case studies from a selection of our clients to provide you with insight into the value ITA are capable of unlocking."
-      /> */}
+        title={pageHeader.title?.[locale] || tWhatWeDo("title")}
+        text={pageHeader.description?.[locale] || tWhatWeDo("description")}
+      />
       <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50">
         {/* What We Do Section */}
         <section className="relative py-10 lg:py-12 overflow-hidden">
@@ -100,38 +150,46 @@ function page() {
                       clipRule="evenodd"
                     ></path>
                   </svg>
-                  <h5 className="text-xl font-bold">Xidmətlərimiz</h5>
+                  <h5 className="text-xl font-bold">{page_what_we_do?.article?.[locale] || tHowWeWork("services")}</h5>
                 </span>
               </div>
-              <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6">Nə İş Görürük</h1>
+              <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+                {page_what_we_do?.title?.[locale] || tHowWeWork("title")}
+              </h1>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Caucasync olaraq beynəlxalq ticarətdə peşəkar həllər təqdim edir, müştərilərimizin uğuruna töhfə veririk
+                {page_what_we_do?.description?.[locale] || tHowWeWork("description")}
               </p>
             </motion.div>
 
             {/* What We Do Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
-              {whatWeDo.map((item, index) => {
-                const Icon = item.icon;
-                return (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    whileHover={{ y: -8 }}
-                    className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300"
-                  >
-                    <div className={`w-16 h-16 bg-gradient-to-r ${item.color} rounded-2xl flex items-center justify-center mb-6`}>
-                      <Icon className="w-8 h-8 text-white" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">{item.title}</h3>
-                    <p className="text-gray-600 leading-relaxed">{item.description}</p>
-                  </motion.div>
-                );
-              })}
-            </div>
+            {whatWeDo.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
+                {whatWeDo.map((item, index) => {
+                  const Icon = item.icon;
+                  return (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      whileHover={{ y: -8 }}
+                      className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300"
+                    >
+                      <div className={`w-16 h-16 bg-gradient-to-r ${item.color} rounded-2xl flex items-center justify-center mb-6`}>
+                        <Icon className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-gray-900 mb-4">{item.title}</h3>
+                      <p className="text-gray-600 leading-relaxed">{item.description}</p>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="text-center py-10">
+                <p>{t("noServicesAvailable")}</p>
+              </div>
+            )}
           </div>
         </section>
 
@@ -156,11 +214,11 @@ function page() {
                       clipRule="evenodd"
                     ></path>
                   </svg>
-                  <h5 className="text-xl font-bold">İş Prinsipimiz</h5>
+                  <h5 className="text-xl font-bold">{tHowWeWork("principle")}</h5>
                 </span>
               </div>
-              <h2 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6">Necə İşləyirik</h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">5 addımda peşəkar və şəffaf iş prosesi</p>
+              <h2 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6">{tHowWeWork("title")}</h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">{tHowWeWork("subtitle")}</p>
             </motion.div>
 
             {/* Process Steps */}
@@ -231,4 +289,3 @@ function page() {
 }
 
 export default page;
-

@@ -18,7 +18,6 @@ const page = () => {
   function handleConfirmAdd() {
     const uniqueId = `${id}-${variant.ml}`;
     const existingItem = basket.items.find((item) => item.id == uniqueId);
-    console.log(existingItem);
 
     if (existingItem) {
       dispatch(incrementQuantity({ id: existingItem.id, amount: quantity }));

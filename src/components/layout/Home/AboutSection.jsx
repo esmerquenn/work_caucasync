@@ -1,86 +1,107 @@
 "use client";
 
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, Target, Building2 } from "lucide-react";
-
-const tabs = [
-  {
-    id: "vision",
-    icon: Eye,
-    label: {
-      az: "Bizim baxışımız",
-      en: "Our Vision",
-      ru: "Наше Видение",
-      tr: "Vizyonumuz",
-    },
-    title: {
-      az: "Gələcəyə Baxışımız",
-      en: "Our Vision for the Future",
-      ru: "Наше Видение Будущего",
-      tr: "Geleceğe Dair Vizyonumuz",
-    },
-    description: {
-      az: "Caucasync olaraq, qlobal ticarətdə lider olmaq və müştərilərimizə innovativ həllər təqdim etmək vizyonumuzla hərəkət edirik. Biz dünya bazarlarında körpü olmaq istəyirik.",
-      en: "As Caucasync, we are driven by the vision of being a leader in global trade and providing innovative solutions to our customers. We want to be a bridge in world markets.",
-      ru: "Как Caucasync, мы движемся видением быть лидером в глобальной торговле и предоставлять инновационные решения нашим клиентам.",
-      tr: "Caucasync olarak, küresel ticarette lider olmak ve müşterilerimize yenilikçi çözümler sunmak vizyonumuzla hareket ediyoruz.",
-    },
-    image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&q=80",
-  },
-  {
-    id: "mission",
-    icon: Target,
-    label: {
-      az: "Missiyamız",
-      en: "Company Mission",
-      ru: "Миссия Компании",
-      tr: "Şirket Misyonumuz",
-    },
-    title: {
-      az: "Missiyamız və Dəyərlərimiz",
-      en: "Our Mission and Values",
-      ru: "Наша Миссия и Ценности",
-      tr: "Misyonumuz ve Değerlerimiz",
-    },
-    description: {
-      az: "Müştərilərimizə ən yüksək keyfiyyətli xidmət göstərmək, etibarlı tərəfdaş olmaq və dayanıqlı biznes həlləri ilə regionda fərq yaratmaqdır. Şəffaflıq, peşəkarlıq və innovasiya bizim əsas prinsiplərimizdir.",
-      en: "To provide the highest quality service to our customers, be a reliable partner, and make a difference in the region with sustainable business solutions. Transparency, professionalism, and innovation are our core principles.",
-      ru: "Предоставлять высочайшее качество услуг нашим клиентам, быть надежным партнером и создавать разницу в регионе с устойчивыми бизнес-решениями.",
-      tr: "Müşterilerimize en yüksek kaliteli hizmeti sunmak, güvenilir bir ortak olmak ve sürdürülebilir iş çözümleriyle bölgede fark yaratmak.",
-    },
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
-  },
-  {
-    id: "about",
-    icon: Building2,
-    label: {
-      az: "Haqqımızda",
-      en: "About Us",
-      ru: "О Нас",
-      tr: "Hakkımızda",
-    },
-    title: {
-      az: "Caucasync Haqqında",
-      en: "About Caucasync",
-      ru: "О Компании Caucasync",
-      tr: "Caucasync Hakkında",
-    },
-    description: {
-      az: "2015-ci ildən bəri fəaliyyət göstərən Caucasync, beynəlxalq ticarət sahəsində ekspert şirkətdir. 50+ ölkə ilə əməkdaşlıq edərək, müştərilərimizə kompleks logistika və ticarət həlləri təqdim edirik. Komandamız 100+ peşəkardan ibarətdir.",
-      en: "Operating since 2015, Caucasync is an expert company in international trade. Collaborating with 50+ countries, we offer comprehensive logistics and trade solutions to our customers. Our team consists of 100+ professionals.",
-      ru: "Работая с 2015 года, Caucasync является экспертной компанией в международной торговле. Сотрудничая с 50+ странами, мы предлагаем комплексные решения в области логистики и торговли.",
-      tr: "2015 yılından beri faaliyet gösteren Caucasync, uluslararası ticaret alanında uzman bir şirkettir. 50+ ülke ile işbirliği yaparak müşterilerimize kapsamlı lojistik ve ticaret çözümleri sunuyoruz.",
-    },
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
-  },
-];
+import { useTranslations } from "next-intl";
+import { useGetAboutSectionsQuery } from "@/store/aboutApi";
 
 function AboutSection() {
+  const t = useTranslations("Common");
+  const { data, error, isLoading } = useGetAboutSectionsQuery();
+  // if (data) {
+  //   console.log("About Sections Data:", data);
+  // }
+  // if (error) {
+  //   console.error("About Sections Error:", error);
+  // }
+  // if (isLoading) {
+  //   console.log("About Sections Loading...");
+  // }
+
   const locale = "az";
-  const [activeTab, setActiveTab] = useState(tabs[0].id);
+  const [activeTab, setActiveTab] = useState("");
+  const [tabs, setTabs] = useState([]);
+
+  useEffect(() => {
+    if (data && data.data && data.data.length > 0) {
+      // Sort by order
+      const sortedData = [...data.data].sort((a, b) => a.order - b.order);
+      
+      // Mapping section_type to config
+      const sectionTypeToConfig = {
+        "company_vision": {
+          id: "vision",
+          icon: Eye,
+          label: {
+            az: "Bizim baxışımız",
+            en: "Our Vision",
+            ru: "Наше Видение",
+            tr: "Vizyonumuz",
+          },
+        },
+        "company_mission": {
+          id: "mission",
+          icon: Target,
+          label: {
+            az: "Missiyamız",
+            en: "Company Mission",
+            ru: "Миссия Компании",
+            tr: "Şirket Misyonumuz",
+          },
+        },
+        "company_about": {
+          id: "about",
+          icon: Building2,
+          label: {
+            az: "Haqqımızda",
+            en: "About Us",
+            ru: "О Нас",
+            tr: "Hakkımızda",
+          },
+        },
+      };
+
+      const mappedTabs = sortedData.map((item) => {
+        let config = sectionTypeToConfig[item.section_type] || sectionTypeToConfig["company_about"];
+        return {
+          ...config,
+          title: item.title,
+          description: item.description,
+          image: `/storage/${item.image}`,
+        };
+      });
+
+      setTabs(mappedTabs);
+      setActiveTab(mappedTabs[0]?.id || "");
+    }
+  }, [data]);
+
   const activeTabData = tabs.find((tab) => tab.id === activeTab);
+
+  if (isLoading || !tabs.length) {
+    return (
+      <section className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-0">
+          <div className="flex justify-center items-center h-64">
+            <div className="text-gray-500">{t("loading")}</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error || !activeTabData) {
+    return (
+      <section className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-0">
+          <div className="flex justify-center items-center h-64">
+            <div className="text-red-500">{t("errorLoadingData")}</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 py-16">
@@ -88,26 +109,22 @@ function AboutSection() {
         {/* Tabs Navigation */}
         <div className="mb-12">
           <div className="flex flex-wrap justify-center gap-3 bg-white rounded-2xl p-2 shadow-sm border border-gray-100">
-            {tabs.map((tab) => {
+            {tabs.map((tab, index) => {
+              // console.log(tab, 'tab')
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
 
               return (
                 <button
-                  key={tab.id}
+                  key={index}
                   onClick={() => setActiveTab(tab.id)}
                   className={`relative px-6 py-3.5 font-medium transition-all duration-300 flex items-center gap-2.5 group ${
-                    isActive
-                      ? "text-emerald-600"
-                      : "text-gray-600 hover:text-emerald-600"
+                    isActive ? "text-emerald-600" : "text-gray-600 hover:text-emerald-600"
                   }`}
                 >
                   <Icon className="w-4.5 h-4.5 relative z-10 transition-colors duration-300" />
-                  <span className="relative z-10 whitespace-nowrap text-sm">
-                    {tab.label[locale]}
-                  </span>
+                  <span className="relative z-10 whitespace-nowrap text-sm">{tab.label[locale]}</span>
 
-                  {/* Hover effect - bottom line */}
                   <motion.div
                     className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500 opacity-0 group-hover:opacity-100"
                     initial={{ scaleX: 0 }}
@@ -115,7 +132,6 @@ function AboutSection() {
                     transition={{ duration: 0.3 }}
                   />
 
-                  {/* Active state - bottom line */}
                   {isActive && (
                     <motion.div
                       layoutId="activeTabIndicator"
@@ -162,14 +178,13 @@ function AboutSection() {
                   {activeTabData.title[locale]}
                 </motion.h2>
 
-                <motion.p
+                <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4, duration: 0.4 }}
                   className="text-lg text-gray-600 mb-8 leading-relaxed"
-                >
-                  {activeTabData.description[locale]}
-                </motion.p>
+                  dangerouslySetInnerHTML={{ __html: activeTabData.description[locale] }}
+                />
 
                 <motion.button
                   initial={{ opacity: 0, y: 10 }}
@@ -180,18 +195,8 @@ function AboutSection() {
                   className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white px-8 py-3.5 rounded-xl font-medium shadow-lg hover:shadow-xl transition-shadow duration-300 w-fit"
                 >
                   <span>Daha Çox</span>
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 7l5 5m0 0l-5 5m5-5H6"
-                    />
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </motion.button>
               </div>
@@ -203,17 +208,12 @@ function AboutSection() {
                 transition={{ delay: 0.2, duration: 0.6 }}
                 className="relative h-80 lg:h-full order-1 lg:order-2 overflow-hidden"
               >
-                <img
-                  src={activeTabData.image}
-                  alt={activeTabData.title[locale]}
-                  className="w-full h-full object-cover"
-                />
+                <img src={activeTabData.image} alt={activeTabData.title[locale]} className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent lg:bg-gradient-to-r lg:from-white/80 lg:via-white/20 lg:to-transparent" />
               </motion.div>
             </div>
           </motion.div>
         </AnimatePresence>
-
       </div>
     </section>
   );

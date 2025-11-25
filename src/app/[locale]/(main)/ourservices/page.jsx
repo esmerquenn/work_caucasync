@@ -1,56 +1,84 @@
 "use client";
 
-import React from "react";
-
+import React, { useMemo } from "react";
+import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import HeaderPages from "@/components/ui/headerPages/HeaderPages";
 import { CategoryCard } from "@/components/layout/Home/CategoryCard";
-import { Factory, Filter, Tractor, Truck } from "lucide-react";
+import { Factory, Filter, Tractor, Truck, Building2 } from "lucide-react";
+import { useGetPageHeadersSectionsQuery } from "@/store/pageHeadersApi";
+import { useGetServicesQuery } from "@/store/servicesApi";
+
+import PageLoader from "@/components/ui/loading/PageLoader";
+
 function OurServicesPage() {
-  const categories = [
-    {
-      id: 1,
-      icon: <Tractor className="size-10"/>,
-      title: "Building",
-      description: "Caucasync abroad as a foreign trade Company main groups of export electrical products we do...",
+  const params = useParams();
+  const locale = (params?.locale) || "az";
+  const t = useTranslations("Common");
+  const tPages = useTranslations("Pages.services");
+  const { data: page, isLoading: pageLoading } = useGetPageHeadersSectionsQuery();
+  const { data: servicesData, isLoading: servicesLoading } = useGetServicesQuery();
+  
+  const pageHeader = page?.data?.find((item) => item.page === "ourservices" || item.page === "services") || {};
+
+  // Icon mapping function
+  const getServiceIcon = (serviceName) => {
+    const name = serviceName?.toLowerCase() || "";
+    if (name.includes("building") || name.includes("construction")) {
+      return <Building2 className="size-10" />;
+    } else if (name.includes("industrial") || name.includes("industry")) {
+      return <Filter className="size-10" />;
+    } else if (name.includes("logistics") || name.includes("logistic")) {
+      return <Truck className="size-10" />;
+    } else if (name.includes("trading") || name.includes("trade")) {
+      return <Factory className="size-10" />;
+    }
+    // Default icon
+    return <Tractor className="size-10" />;
+  };
+
+  // Map API data to categories format
+  const categories = useMemo(() => {
+    if (!servicesData?.success || !servicesData?.data) {
+      return [];
+    }
+    return servicesData.data.map((service) => ({
+      id: service.id,
+      icon: getServiceIcon(service.name),
+      title: service.name,
+      description: service.description,
       readMoreLink: "#",
-    },
-    {
-      id: 2,
-      icon: <Filter className="size-10"/>,
-      title: "Industrial",
-      description: "Caucasync export abroad as a foreign trade company, the main products of our industry groups...",
-      readMoreLink: "#",
-    },
-    {
-      id: 3,
-      icon: <Truck className="size-10"/>,
-      title: "Logistics",
-      description: "We provide comprehensive logistics solutions for international trade and distribution networks...",
-      readMoreLink: "#",
-    },
-    {
-      id: 4,
-      icon: <Factory className="size-10"/>,
-      title: "Trading",
-      description: "Complete trade solutions with professional support and global market access for your business...",
-      readMoreLink: "#",
-    },
-  ];
+    }));
+  }, [servicesData]);
+
+  if (pageLoading || servicesLoading) {
+    return <PageLoader />;
+  }
   return (
     <div className="py-10 bg-main">
-      <HeaderPages image="bg-image-services" title="Services" text="Our Service Areas" />
+      <HeaderPages 
+        image="bg-image-services" 
+        title={pageHeader.title?.[locale] || tPages("title")} 
+        text={pageHeader.description?.[locale] || tPages("description")} 
+      />
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-          {categories.map((category) => (
-            <CategoryCard
-              key={category.id}
-              icon={category.icon}
-              title={category.title}
-              description={category.description}
-              readMoreLink={category.readMoreLink}
-            />
-          ))}
-        </div>
+        {categories.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+            {categories.map((category) => (
+              <CategoryCard
+                key={category.id}
+                icon={category.icon}
+                title={category.title}
+                description={category.description}
+                readMoreLink={category.readMoreLink}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-10">
+            <p>{t("noServicesAvailable")}</p>
+          </div>
+        )}
       </section>
     </div>
   );

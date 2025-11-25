@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 export function CategoryCard({ icon, title, description, readMoreLink = "#", className }) {
+  const t = useTranslations("Common");
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -70,7 +72,7 @@ export function CategoryCard({ icon, title, description, readMoreLink = "#", cla
                   isHovered ? "text-white hover:gap-3" : "green-500-text hover:text-green-700"
                 )}
               >
-                Read more
+                {t("readMore")}
                 <span className={cn("transition-transform duration-300", isHovered ? "translate-x-1" : "")}>
                   {" "}
                   <svg width="17" height="17" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">

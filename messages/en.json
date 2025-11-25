@@ -2,8 +2,65 @@
   "Header": {
     "welcome": "Welcome to Caucasync",
     "callUs": "Call us:",
-    "workHours":"Work Hours",
-    "mailTo":"Mail To",
-    "address":"Address"
+    "workHours": "Work Hours",
+    "mailTo": "Mail To",
+    "address": "Address"
+  },
+
+  "Common": {
+    "loading": "Loading...",
+    "pleaseWait": "Please wait",
+    "readMore": "Read more",
+    "headerNotFound": "Header not found",
+    "noDataAvailable": "No data available",
+    "loadingServices": "Loading services...",
+    "loadingPartners": "Loading partners...",
+    "loadingSlides": "Loading slides...",
+    "noServicesAvailable": "No services available",
+    "noPartnersAvailable": "No partners available",
+    "noSlidesAvailable": "No slides available",
+    "loadingError": "Loading error",
+    "errorLoadingData": "Error loading data"
+  },
+
+  "Pages": {
+    "about": {
+      "title": "About us",
+      "description": "We know no boundaries in our work"
+    },
+    "services": {
+      "title": "Services",
+      "description": "Our Service Areas"
+    },
+    "whatwedo": {
+      "title": "What we do",
+      "description": "We've prepared a few case studies from a selection of our clients to provide you with insight into the value ITA are capable of unlocking."
+    },
+    "howwework": {
+      "title": "How we work",
+      "description": "As Caucasync, we provide professional solutions in international trade and contribute to the success of our clients",
+      "principle": "Our Work Principle",
+      "subtitle": "Professional and transparent work process in 5 steps",
+      "services": "Our Services"
+    },
+    "contact": {
+      "title": "Get in Touch",
+      "description": "Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible",
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "followUs": "Follow Us",
+      "quickResponse": "Quick Response",
+      "quickResponseDesc": "We typically respond within 24 hours during business days. For urgent matters, please call us directly."
+    },
+    "partners": {
+      "title": "Our Partners",
+      "description": "We've prepared a few case studies from a selection of our clients to provide you with insight into the value ITA are capable of unlocking.",
+      "trustedBy": "Trusted by leading companies worldwide",
+      "becomePartner": "Become a Partner",
+      "globalPartners": "Global Partners",
+      "yearsExperience": "Years Experience",
+      "clientSatisfaction": "Client Satisfaction"
+    }
   }
 }
