@@ -11,6 +11,11 @@ const nextConfig = {
         port: "8000",
         pathname: "/storage/**",
       },
+      {
+        protocol: "https",
+        hostname: "api.caucasync.com",
+        pathname: "/storage/**",
+      },
     ],
   },
 };

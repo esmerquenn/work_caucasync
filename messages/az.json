@@ -4,7 +4,17 @@
     "callUs": "Zəng edin:",
     "workHours": "İş saatları",
     "mailTo": "E-poçt",
-    "address": "Ünvan"
+    "address": "Ünvan",
+    "home": "Ana səhifə",
+    "about": "Haqqımızda",
+    "howWeWork": "Necə işləyirik",
+    "services": "Xidmətlər",
+    "partners": "Tərəfdaşlarımız",
+    "contact": "Əlaqə",
+    "weAre": "Biz",
+    "description": "Caucasync şirkəti xarici ölkələrdə fəaliyyət göstərən qida sənayesi istehsalçılarının Azərbaycan nümayəndəsi olub, onların məhsullarını müxtəlif şirkətlərə təqdim edirik",
+    "officialInfo": "Rəsmi Məlumat"
+
   },
 
   "Common": {

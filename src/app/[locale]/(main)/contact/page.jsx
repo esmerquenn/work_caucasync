@@ -62,8 +62,8 @@ function ContactPage() {
     {
       icon: Phone,
       title: tPages("phone"),
-      value: contactData?.phone || "+994 50 334 45 49",
-      href: contactData?.phone ? `tel:${contactData.phone}` : "tel:+994503344549",
+      value: contactData?.phone || "+994 55 510 37 36",
+      href: contactData?.phone ? `tel:${contactData.phone}` : "tel:+994555103736",
     },
     {
       icon: MapPin,

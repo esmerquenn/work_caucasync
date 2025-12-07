@@ -22,9 +22,9 @@ console.log(contactData);
   const items = [
     {
       label: t("callUs", { defaultValue: "Call us:" }),
-      text: contactData?.phone || "+994 50 334 45 49",
+      text: contactData?.phone || "+994 55 510 37 36",
       icon: PhoneCall,
-      href: contactData?.phone ? `tel:${contactData.phone}` : "tel:+994503344549",
+      href: contactData?.phone ? `tel:${contactData.phone}` : "tel:+994555103736",
     },
     {
       label: t("workHours", { defaultValue: "Work hours:" }),

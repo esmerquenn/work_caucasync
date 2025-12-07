@@ -4,7 +4,16 @@
     "callUs": "Call us:",
     "workHours": "Work Hours",
     "mailTo": "Mail To",
-    "address": "Address"
+    "address": "Address",
+    "home": "Home",
+    "about": "About Us",
+    "howWeWork": "How we work",
+    "services": "Services",
+    "partners": "Our partners",
+    "contact": "Contact",
+    "weAre": "We are",
+    "description": "Caucasync company is the Azerbaijan representative of manufacturers in foreign countries operating in the fields of food and markets their products to various companies",
+"officialInfo": "Official info"
   },
 
   "Common": {

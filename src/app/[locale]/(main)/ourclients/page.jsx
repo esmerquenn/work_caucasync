@@ -26,7 +26,7 @@ function page() {
     return partnersData.data.map((partner) => ({
       id: partner.id,
       name: partner.name,
-      logo: partner.image ? `http://127.0.0.1:8000/storage/${partner.image}` : "",
+      logo: partner.image ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${partner.image}` : "",
     }));
   }, [partnersData]);
 

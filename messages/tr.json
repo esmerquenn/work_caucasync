@@ -4,7 +4,16 @@
     "callUs": "Bizi arayın:",
     "workHours": "Çalışma Saatleri",
     "mailTo": "E-posta",
-    "address": "Adres"
+    "address": "Adres",
+    "home": "Ana Sayfa",
+    "about": "Hakkımızda",
+    "howWeWork": "Nasıl Çalışıyoruz",
+    "services": "Hizmetler",
+    "partners": "İş Ortaklarımız",
+    "contact": "İletişim",
+    "weAre": "Biz",
+    "description": "Caucasync şirketi, yabancı ülkelerde gıda alanında faaliyet gösteren üreticilerin Azerbaycan temsilcisi olup, ürünlerini çeşitli şirketlere pazarlamaktadır",
+    "officialInfo": "Resmi Bilgiler"
   },
 
   "Common": {

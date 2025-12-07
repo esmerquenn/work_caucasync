@@ -13,9 +13,9 @@ function Footer() {
   const items = [
     {
       label: t("callUs", { defaultValue: "Call us:" }),
-      text: contactData?.phone || "+994 50 334 45 49",
+      text: contactData?.phone || "++994 55 510 37 36",
       icon: PhoneCall,
-      href: contactData?.phone ? `tel:${contactData.phone}` : "tel:+994503344549",
+      href: contactData?.phone ? `tel:${contactData.phone}` : "tel:+994555103736",
     },
     {
       label: t("workHours", { defaultValue: "Work hours:" }),
@@ -41,11 +41,10 @@ function Footer() {
       <div className="max-w-6xl mx-auto px-4 sm:px-0 py-10 lg:py-12  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-content-center  gap-10">
         <div>
           <h3 className="font-bold text-2xl mb-4">
-            We are <span className="text-green-700"> Caucasync </span>
+            {t("weAre")} <span className="text-green-700">Caucasync</span>
           </h3>
-          <p className=" tracking-wider font-semibold">
-            Caucasync company It is the Azerbaijan representative of the manufacturers in foreign countries operating in the
-            fields of food and markets their products to various companies
+          <p className="tracking-wider font-semibold">
+            {t("description")}
           </p>
           <div className="mt-4">
             <SocialIcons variant="footer" />
@@ -54,7 +53,7 @@ function Footer() {
 
         <div className="flex lg:justify-center">
           <div>
-            <h3 className="font-semibold text-xl mb-4">Official info</h3>
+            <h3 className="font-semibold text-xl mb-4">{t("officialInfo")}</h3>
             <div className="flex flex-col gap-5">
               {items.map((item, index) => {
                 const Icon = item.icon;
