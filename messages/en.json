@@ -39,7 +39,15 @@
     },
     "services": {
       "title": "Services",
-      "description": "Our Service Areas"
+      "description": "Our Service Areas",
+      "subtitle": "Professional Solutions",
+      "serviceNotFound": "Service not found",
+      "serviceNotFoundDesc": "The service you are looking for does not exist.",
+      "backToServices": "Back to Services",
+      "keyFeatures": "Key Features",
+      "interestedInService": "Interested in this service?",
+      "contactUsForMore": "Contact us for more information and a personalized quote.",
+      "contactUs": "Contact Us"
     },
     "whatwedo": {
       "title": "What we do",

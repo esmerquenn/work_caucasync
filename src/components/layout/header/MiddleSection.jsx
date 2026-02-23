@@ -9,14 +9,12 @@ import { LanguageSwitcher } from "@/components/ui/selects";
 import Logo from "../../../assets/img/photo/logo12.png";
 import Image from "next/image";
 import Link from "next/link";
-import { useGetsettingsQuery } from "@/store/settingsApi";
-import { useGetContactSectionsQuery } from "@/store/contactApi";
+import { useGetSettingsQuery, useGetContactSectionsQuery } from "@/hooks/useApi";
 function MiddleSection() {
   const t = useTranslations("Header");
-  const { data, isLoading } = useGetsettingsQuery();
+  const { data, isLoading } = useGetSettingsQuery();
   const { data: contactData, isLoading: contactLoading} = useGetContactSectionsQuery();
   const site_logo = data?.logo || Logo;
-console.log(contactData);
 
   // const {email, phone, workhours, address}=contactData?.data;
   const items = [

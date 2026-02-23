@@ -5,9 +5,7 @@ import { useParams } from "next/navigation";
 import { Users, CheckCircle, TrendingUp, FileText, Handshake, Target, Award, Airplay, Search, Settings, Package, Truck, Globe, Building, Factory } from "lucide-react";
 
 import HeaderPages from "@/components/ui/headerPages/HeaderPages";
-import { useGetPageHeadersSectionsQuery } from "@/store/pageHeadersApi";
-import { useGetHowWeDoStepsSectionsQuery } from "@/store/howWeWorkStepsApi";
-import { useGetWhatWeDoSectionSectionsQuery } from "@/store/whatWeDoSectionsApi";
+import { useGetPageHeadersSectionsQuery, useGetHowWeDoStepsQuery, useGetWhatWeDoSectionsQuery } from "@/hooks/useApi";
 import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import PageLoader from "@/components/ui/loading/PageLoader";
@@ -19,8 +17,8 @@ function page() {
   const tWhatWeDo = useTranslations("Pages.whatwedo");
   const tHowWeWork = useTranslations("Pages.howwework");
   const { data: page, isLoading: pageLoading } = useGetPageHeadersSectionsQuery();
-  const { data: stepsData, isLoading: stepsLoading } = useGetHowWeDoStepsSectionsQuery();
-  const { data: whatWeDoData, isLoading: whatWeDoLoading } = useGetWhatWeDoSectionSectionsQuery();
+  const { data: stepsData, isLoading: stepsLoading } = useGetHowWeDoStepsQuery();
+  const { data: whatWeDoData, isLoading: whatWeDoLoading } = useGetWhatWeDoSectionsQuery();
 
   const pageHeader = page?.data?.find((item) => item.page === "whatwedo") || {};
   const page_what_we_do = page?.data?.find((item) => item.page === "how_we_work") || {};

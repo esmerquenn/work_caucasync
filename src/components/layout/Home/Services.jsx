@@ -5,8 +5,7 @@ import { useTranslations } from "next-intl";
 import { CategoryCard } from "./CategoryCard";
 import HeaderOf from "./HeaderOf";
 import { Factory, Filter, Tractor, Truck, Building2 } from "lucide-react";
-import { useGetServicesQuery } from "@/store/servicesApi";
-import { useGetPageHeadersSectionsQuery } from "@/store/pageHeadersApi";
+import { useGetServicesQuery, useGetPageHeadersSectionsQuery } from "@/hooks/useApi";
 
 function Services() {
   const params = useParams();
@@ -44,9 +43,9 @@ function Services() {
       icon: getServiceIcon(service.name),
       title: service.name,
       description: service.description,
-      readMoreLink: "#",
+      readMoreLink: `/${locale}/services/${service.slug || service.id}`,
     }));
-  }, [servicesData]);
+  }, [servicesData, locale]);
 
   return (
     <div className="mt-20 mb-10">

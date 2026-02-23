@@ -3,7 +3,7 @@
 import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 import { Facebook, Twitter, Linkedin, Instagram, Youtube, Github, Globe } from "lucide-react";
-import { useGetSocialAccountSectionsQuery } from "@/store/socialAccountsApi";
+import { useGetSocialAccountsQuery } from "@/hooks/useApi";
 
 // Icon mapping based on name
 const iconMap = {
@@ -31,7 +31,7 @@ const colorMap = {
 };
 
 function SocialIcons({ variant = "default", className = "" }) {
-  const { data: socialData, isLoading } = useGetSocialAccountSectionsQuery();
+  const { data: socialData, isLoading } = useGetSocialAccountsQuery();
 
   const socialAccounts = useMemo(() => {
     if (!socialData?.success || !socialData?.data) {

@@ -4,11 +4,13 @@ import OurPartners from "@/components/layout/Home/OurPartners";
 import AboutSection from "@/components/layout/Home/AboutSection";
 import Services from "@/components/layout/Home/Services";
 import PageLoader from "@/components/ui/loading/PageLoader";
-import { useGetMainSliderSectionsQuery } from "@/store/mainSlidersApi";
-import { useGetPartnerSectionsQuery } from "@/store/partnersApi";
-import { useGetServicesQuery } from "@/store/servicesApi";
-import { useGetAboutSectionsQuery } from "@/store/aboutApi";
-import { useGetPageHeadersSectionsQuery } from "@/store/pageHeadersApi";
+import {
+  useGetMainSliderSectionsQuery,
+  useGetPartnerSectionsQuery,
+  useGetServicesQuery,
+  useGetAboutSectionsQuery,
+  useGetPageHeadersSectionsQuery,
+} from "@/hooks/useApi";
 
 export default function HomePage() {
   const { isLoading: heroLoading } = useGetMainSliderSectionsQuery();

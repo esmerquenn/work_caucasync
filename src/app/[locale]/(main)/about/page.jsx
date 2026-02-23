@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import AboutSection from "@/components/layout/Home/AboutSection";
 import AboutStates from "@/components/ui/headerPages/AboutStates";
 import HeaderPages from "@/components/ui/headerPages/HeaderPages";
-import { useGetPageHeadersSectionsQuery } from "@/store/pageHeadersApi";
+import { useGetPageHeadersSectionsQuery } from "@/hooks/useApi";
 import PageLoader from "@/components/ui/loading/PageLoader";
 
 function page() {

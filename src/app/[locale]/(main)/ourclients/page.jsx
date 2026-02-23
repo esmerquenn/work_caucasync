@@ -3,8 +3,7 @@ import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import HeaderPages from "@/components/ui/headerPages/HeaderPages";
 import { motion } from "framer-motion";
-import { useGetPageHeadersSectionsQuery } from "@/store/pageHeadersApi";
-import { useGetPartnerSectionsQuery } from "@/store/partnersApi";
+import { useGetPageHeadersSectionsQuery, useGetPartnerSectionsQuery } from "@/hooks/useApi";
 import PageLoader from "@/components/ui/loading/PageLoader";
 import { useTranslations } from "next-intl";
 

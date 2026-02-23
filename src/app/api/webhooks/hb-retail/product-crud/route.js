@@ -50,7 +50,6 @@ export async function POST(request) {
 
     // Validate the request body against the schema
     const validatedData = BodySchema.parse(body);
-    console.log(validatedData);
     // Here you would typically save the product to your database
     // For now, we'll just return the validated data
     return NextResponse.json({

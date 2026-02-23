@@ -11,8 +11,6 @@ const SizeFilter = () => {
 
   const handleSizeChange = (size) => {
     dispatch(toggleSize(size));
-    console.log(selectedSizes);
-    
   };
 
   return (

@@ -2,10 +2,9 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
-import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import HeaderPages from "@/components/ui/headerPages/HeaderPages";
-import { useGetContactSectionsQuery } from "@/store/contactApi";
-import { useGetPageHeadersSectionsQuery } from "@/store/pageHeadersApi";
+import { useGetContactSectionsQuery, useSubmitContactFormMutation, useGetPageHeadersSectionsQuery } from "@/hooks/useApi";
 import SocialIcons from "@/components/ui/social-icons/SocialIcons";
 import PageLoader from "@/components/ui/loading/PageLoader";
 import { useTranslations } from "next-intl";
@@ -17,7 +16,8 @@ function ContactPage() {
   const tPages = useTranslations("Pages.contact");
   const { data: contactData, isLoading: contactLoading } = useGetContactSectionsQuery();
   const { data: page, isLoading: pageLoading } = useGetPageHeadersSectionsQuery();
-  
+  const [submitContactForm, { isLoading: isSubmitting }] = useSubmitContactFormMutation();
+
   const contactHeader = page?.data?.find((item) => item.page === "contact") || {};
 
   const [formData, setFormData] = useState({
@@ -28,21 +28,33 @@ function ContactPage() {
     message: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        subject: "",
-        message: "",
-      });
-    }, 3000);
+    setError(null);
+
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      setError(t("fillRequiredFields", { defaultValue: "Please fill in all required fields" }));
+      return;
+    }
+
+    try {
+      await submitContactForm(formData);
+      setIsSubmitted(true);
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        });
+      }, 3000);
+    } catch {
+      setError(t("submitError", { defaultValue: "Failed to send message. Please try again." }));
+    }
   };
 
   const handleChange = (e) => {
@@ -207,14 +219,31 @@ function ContactPage() {
                     ></textarea>
                   </div>
 
+                  {error && (
+                    <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-sm text-red-700">
+                      <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                      <span className="text-sm">{error}</span>
+                    </div>
+                  )}
+
                   <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                    whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                     onClick={handleSubmit}
-                    className="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white px-8 py-3 rounded-sm font-semibold shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center justify-center gap-2"
+                    disabled={isSubmitting}
+                    className="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white px-8 py-3 rounded-sm font-semibold shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    <span>Send Message</span>
-                    <Send className="w-5 h-5" />
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        <span>{t("sending", { defaultValue: "Sending..." })}</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Send Message</span>
+                        <Send className="w-5 h-5" />
+                      </>
+                    )}
                   </motion.button>
                 </div>
               )}
@@ -291,5 +320,3 @@ function ContactPage() {
 }
 
 export default ContactPage;
-
-// /////////////////////////////////////

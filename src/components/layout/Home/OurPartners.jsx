@@ -4,8 +4,7 @@ import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import HeaderOf from "./HeaderOf";
-import { useGetPartnerSectionsQuery } from "@/store/partnersApi";
-import { useGetPageHeadersSectionsQuery } from "@/store/pageHeadersApi";
+import { useGetPartnerSectionsQuery, useGetPageHeadersSectionsQuery } from "@/hooks/useApi";
 
 function OurPartners() {
   const params = useParams();

@@ -3,6 +3,14 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
+
+const truncateWords = (text, maxWords = 40) => {
+  if (!text) return "";
+  const words = text.split(/\s+/);
+  if (words.length <= maxWords) return text;
+  return words.slice(0, maxWords).join(" ") + "...";
+};
 
 export function CategoryCard({ icon, title, description, readMoreLink = "#", className }) {
   const t = useTranslations("Common");
@@ -59,13 +67,13 @@ export function CategoryCard({ icon, title, description, readMoreLink = "#", cla
               isHovered ? "text-white font-semibold" : "text-gray-600"
             )}
           >
-            {description}
+            {truncateWords(description, 40)}
           </p>
 
           {/* Read More Link */}
-          {readMoreLink && (
-            <div className="mt-1 pt-2">
-              <a
+          {readMoreLink && readMoreLink !== "#" && (
+            <div className="mt-1 pt-2 relative z-20">
+              <Link
                 href={readMoreLink}
                 className={cn(
                   "inline-flex items-center gap-2 font-semibold transition-all duration-300",
@@ -84,13 +92,13 @@ export function CategoryCard({ icon, title, description, readMoreLink = "#", cla
                     ></path>
                   </svg>{" "}
                 </span>
-              </a>
+              </Link>
             </div>
           )}
         </div>
 
         {isHovered && (
-          <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 opacity-10 pointer-events-none">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent animate-pulse" />
           </div>
         )}

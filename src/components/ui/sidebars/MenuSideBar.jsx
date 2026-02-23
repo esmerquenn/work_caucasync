@@ -8,11 +8,11 @@ import Link from "next/link";
 import { Separator } from "../separator";
 import Logo from "../../../assets/img/photo/logo12.png";
 import Image from "next/image";
-import { useGetsettingsQuery } from "@/store/settingsApi";
+import { useGetSettingsQuery } from "@/hooks/useApi";
 
 export function MenuSideBar() {
   const t = useTranslations("Header");
-  const { data, isLoading } = useGetsettingsQuery();
+  const { data, isLoading } = useGetSettingsQuery();
 
   const site_logo = data?.logo || Logo;
 

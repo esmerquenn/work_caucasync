@@ -39,7 +39,15 @@
     },
     "services": {
       "title": "Hizmetler",
-      "description": "Hizmet Alanlarımız"
+      "description": "Hizmet Alanlarımız",
+      "subtitle": "Profesyonel Çözümler",
+      "serviceNotFound": "Hizmet bulunamadı",
+      "serviceNotFoundDesc": "Aradığınız hizmet mevcut değil.",
+      "backToServices": "Hizmetlere Dön",
+      "keyFeatures": "Temel Özellikler",
+      "interestedInService": "Bu hizmetle ilgileniyor musunuz?",
+      "contactUsForMore": "Daha fazla bilgi ve kişisel teklif için bizimle iletişime geçin.",
+      "contactUs": "Bize Ulaşın"
     },
     "whatwedo": {
       "title": "Ne yapıyoruz",

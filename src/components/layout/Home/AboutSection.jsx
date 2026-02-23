@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, Target, Building2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useGetAboutSectionsQuery } from "@/store/aboutApi";
+import { useGetAboutSectionsQuery } from "@/hooks/useApi";
 
 function AboutSection() {
   const t = useTranslations("Common");
@@ -28,9 +28,9 @@ function AboutSection() {
       // Sort by order
       const sortedData = [...data.data].sort((a, b) => a.order - b.order);
       
-      // Mapping section_type to config
+      // Mapping section_type to config (API returns: our_vision, company_mission, about_us)
       const sectionTypeToConfig = {
-        "company_vision": {
+        "our_vision": {
           id: "vision",
           icon: Eye,
           label: {
@@ -50,7 +50,7 @@ function AboutSection() {
             tr: "Şirket Misyonumuz",
           },
         },
-        "company_about": {
+        "about_us": {
           id: "about",
           icon: Building2,
           label: {
@@ -63,7 +63,7 @@ function AboutSection() {
       };
 
       const mappedTabs = sortedData.map((item) => {
-        let config = sectionTypeToConfig[item.section_type] || sectionTypeToConfig["company_about"];
+        let config = sectionTypeToConfig[item.section_type] || sectionTypeToConfig["about_us"];
         return {
           ...config,
           title: item.title,

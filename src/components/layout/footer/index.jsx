@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import { AlarmClock, Mail, MapPin, PhoneCall } from "lucide-react";
 import React from "react";
 import { motion } from "framer-motion";
-import { useGetContactSectionsQuery } from "@/store/contactApi";
+import { useGetContactSectionsQuery } from "@/hooks/useApi";
 import SocialIcons from "@/components/ui/social-icons/SocialIcons";
 
 function Footer() {

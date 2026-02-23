@@ -3,10 +3,10 @@ import Link from "next/link";
 import React from "react";
 import { useTranslations } from "next-intl";
 import Logo from "../../../assets/img/photo/logo12.png";
-import { useGetsettingsQuery } from "@/store/settingsApi";
+import { useGetSettingsQuery } from "@/hooks/useApi";
 
 function NavSection() {
-  const { data, isLoading } = useGetsettingsQuery();
+  const { data, isLoading } = useGetSettingsQuery();
   const t = useTranslations("Header");
 
   const site_logo = data?.logo || Logo;

@@ -1,174 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [
-  {
-    href: "/",
-    id: 1,
-    title: "Ətir 1",
-    description: "Ən brendindən ətir zad bizim etirlerden yoxdu",
-    imageUrl: "/img/perfume1.jpg",
-    isNew: "true",
-    discount: "20",
-    brand: "Brand A",
-    gender: "Unisex",
-    variants: [
-      { ml: 30, price: "25" },
-      { ml: 50, price: "35" },
-      { ml: 100, price: "60" },
-    ],
-  },
-  {
-    href: "/",
-    id: 2,
-    title: "Ətir 2",
-    description: "Ən brendindən ətir zad bizim etirlerden yoxdu",
-    imageUrl: "/img/perfume2.jpg",
-    isNew: "true",
-    discount: "15",
-    brand: "Brand B",
-    gender: "Woman",
-    variants: [
-      { ml: 50, price: "40" },
-      { ml: 100, price: "65" },
-      { ml: 150, price: "85" },
-    ],
-  },
-  {
-    href: "/",
-    id: 3,
-    title: "Ətir 3",
-    description: "Ən brendindən ətir zad bizim etirlerden yoxdu",
-    imageUrl: "/img/perfume3.jpg",
-    isNew: "true",
-    discount: "10",
-    brand: "Brand C",
-    gender: "Man",
-    variants: [
-      { ml: 30, price: "30" },
-      { ml: 60, price: "50" },
-      { ml: 100, price: "75" },
-    ],
-  },
-  {
-    href: "/",
-    id: 4,
-    title: "Ətir 4",
-    description: "Ən brendindən ətir zad bizim etirlerden yoxdu",
-    imageUrl: "/img/perfume4.jpg",
-    isNew: "false",
-    discount: "25",
-    brand: "Brand D",
-    gender: "Unisex",
-    variants: [
-      { ml: 50, price: "35" },
-      { ml: 75, price: "50" },
-      { ml: 125, price: "75" },
-    ],
-  },
-  {
-    href: "/",
-    id: 5,
-    title: "Ətir 5",
-    description: "Ən brendindən ətir zad bizim etirlerden yoxdu",
-    imageUrl: "/img/perfume5.jpg",
-    isNew: "false",
-    discount: "30",
-    brand: "Brand E",
-    gender: "Man",
-    variants: [
-      { ml: 60, price: "45" },
-      { ml: 100, price: "70" },
-      { ml: 150, price: "95" },
-    ],
-  },
-  {
-    href: "/",
-    id: 6,
-    title: "Ətir 6",
-    description: "Ən brendindən ətir zad bizim etirlerden yoxdu",
-    imageUrl: "/img/perfume6.jpg",
-    isNew: "true",
-    discount: "20",
-    brand: "Brand F",
-    gender: "Woman",
-    variants: [
-      { ml: 50, price: "40" },
-      { ml: 75, price: "55" },
-      { ml: 100, price: "70" },
-    ],
-  },
-  {
-    href: "/",
-    id: 7,
-    title: "Ətir 7",
-    description: "Ən brendindən ətir zad bizim etirlerden yoxdu",
-    imageUrl: "/img/perfume7.jpg",
-    isNew: "true",
-    discount: "10",
-    brand: "Brand G",
-    gender: "Unisex",
-    variants: [
-      { ml: 50, price: "45" },
-      { ml: 100, price: "70" },
-      { ml: 150, price: "95" },
-    ],
-  },
-  {
-    href: "/",
-    id: 8,
-    title: "Ətir 8",
-    description: "Ən brendindən ətir zad bizim etirlerden yoxdu",
-    imageUrl: "/img/perfume8.jpg",
-    isNew: "false",
-    discount: "5",
-    brand: "Brand H",
-    gender: "Child",
-    variants: [
-      { ml: 30, price: "25" },
-      { ml: 60, price: "40" },
-      { ml: 90, price: "55" },
-    ],
-  },
-  {
-    href: "/",
-    id: 9,
-    title: "Ətir 9",
-    description: "Ən brendindən ətir zad bizim etirlerden yoxdu",
-    imageUrl: "/img/perfume9.jpg",
-    isNew: "true",
-    discount: "15",
-    brand: "Brand I",
-    gender: "Man",
-    variants: [
-      { ml: 50, price: "35" },
-      { ml: 75, price: "50" },
-      { ml: 100, price: "65" },
-    ],
-  },
-  {
-    href: "/",
-    id: 10,
-    title: "Ətir 10",
-    description: "Ən brendindən ətir zad bizim etirlerden yoxdu",
-    imageUrl: "/img/perfume10.jpg",
-    isNew: "true",
-    discount: "30",
-    brand: "Brand J",
-    gender: "Woman",
-    variants: [
-      { ml: 60, price: "50" },
-      { ml: 120, price: "90" },
-      { ml: 180, price: "125" },
-    ],
-  },
-];
+const initialState = {
+  items: [],
+  loading: false,
+  error: null,
+};
 
 const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    // reducer elave edejemmmm
+    setProducts(state, action) {
+      state.items = action.payload;
+    },
+    setLoading(state, action) {
+      state.loading = action.payload;
+    },
+    setError(state, action) {
+      state.error = action.payload;
+    },
+    clearProducts(state) {
+      state.items = [];
+      state.loading = false;
+      state.error = null;
+    },
   },
 });
 
+export const { setProducts, setLoading, setError, clearProducts } = productsSlice.actions;
 export const productsReducer = productsSlice.reducer;

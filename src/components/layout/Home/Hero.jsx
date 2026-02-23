@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
 import ButtonMain from "@/components/ui/buttons/ButtonMain";
-import { useGetMainSliderSectionsQuery } from "@/store/mainSlidersApi";
+import { useGetMainSliderSectionsQuery } from "@/hooks/useApi";
 
 export default function Hero() {
   const params = useParams();

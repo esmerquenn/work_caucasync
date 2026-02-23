@@ -40,7 +40,15 @@
     },
     "services": {
       "title": "Xidmətlər",
-      "description": "Xidmət sahələrimiz"
+      "description": "Xidmət sahələrimiz",
+      "subtitle": "Peşəkar Həllər",
+      "serviceNotFound": "Xidmət tapılmadı",
+      "serviceNotFoundDesc": "Axtardığınız xidmət mövcud deyil.",
+      "backToServices": "Xidmətlərə qayıt",
+      "keyFeatures": "Əsas Xüsusiyyətlər",
+      "interestedInService": "Bu xidmətlə maraqlanırsınız?",
+      "contactUsForMore": "Ətraflı məlumat və fərdi təklif üçün bizimlə əlaqə saxlayın.",
+      "contactUs": "Bizimlə Əlaqə"
     },
     "whatwedo": {
       "title": "Nə edirik",

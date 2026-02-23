@@ -16,8 +16,6 @@ const filterSlice = createSlice({
         state.selectedSizes = state.selectedSizes.filter(item => item !== size);
       } else {
         state.selectedSizes.push(size);
-        console.log('state', state.selectedSizes);
-        
       }
     },
     toggleBrand: (state, action) => {

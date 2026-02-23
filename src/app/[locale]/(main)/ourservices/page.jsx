@@ -6,8 +6,7 @@ import { useTranslations } from "next-intl";
 import HeaderPages from "@/components/ui/headerPages/HeaderPages";
 import { CategoryCard } from "@/components/layout/Home/CategoryCard";
 import { Factory, Filter, Tractor, Truck, Building2 } from "lucide-react";
-import { useGetPageHeadersSectionsQuery } from "@/store/pageHeadersApi";
-import { useGetServicesQuery } from "@/store/servicesApi";
+import { useGetPageHeadersSectionsQuery, useGetServicesQuery } from "@/hooks/useApi";
 
 import PageLoader from "@/components/ui/loading/PageLoader";
 
